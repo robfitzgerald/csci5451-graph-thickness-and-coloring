@@ -1,4 +1,5 @@
 #include <iostream>
+#include "chromaticNumber.h"
 
 int main(int argc, char** argv) {
 
@@ -20,6 +21,8 @@ int main(int argc, char** argv) {
 	for (int i = 0; i < vertices; ++i) {
 		std::cout << "r[" << i << "] is " << r[i] << std::endl;
 	}
+
+	chromaticNumber(n,r,vertices);
 
 	return 0;
 }
