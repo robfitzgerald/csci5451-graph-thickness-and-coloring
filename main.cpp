@@ -22,7 +22,9 @@ int main(int argc, char** argv) {
 		std::cout << "r[" << i << "] is " << r[i] << std::endl;
 	}
 
-	chromaticNumber(n,r,vertices);
+	int c = chromaticNumber(n,r,vertices);
+
+	std::cout << "chromaticNumber is " << c << "\n\n" << std::endl;
 
 	return 0;
 }
