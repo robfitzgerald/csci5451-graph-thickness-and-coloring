@@ -2,6 +2,7 @@
 #include "math.h"
 #include "chromaticNumber.h"
 
+const int SENTINEL = 99999;
 
 
 int chromaticNumber(int n, int* r, int rSize) {
@@ -28,10 +29,12 @@ int chromaticNumber(int n, int* r, int rSize) {
 		}
 	} else {  /* is odd */
 		if (checkIfRValuesAreEqual(r, rSize)) {
-			std::cout << "r values were all the same\n";
+			std::cout << "returning correct chromatic number\n";
 			chromaticResult = 2 * r[2] + ceil(r[2] / 2.0);
 		} else {
-			std::cout << "r values were NOT all the same\n";
+			int lowestR = findLowestR(r, rSize);
+			chromaticResult = 2 * lowestR + ceil(lowestR / 2.0);
+			std::cout << "hmm. this may need to be based on the independence number\n";
 		}
 	}
 	return chromaticResult;
@@ -55,4 +58,16 @@ bool checkIfRValuesAreEqual (int* r, int rSize) {
 		previousRValue = r[i];
 	}
 	return rValuesAreAllTheSame;
+}
+
+
+
+int findLowestR (int* r, int rSize) {
+	int lowest = SENTINEL;
+	for (int i = 0; i < rSize; ++i) {
+		if (lowest > r[i]) {
+			lowest = r[i];
+		}
+	}
+	return lowest;
 }
