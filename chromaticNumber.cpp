@@ -37,10 +37,11 @@ int chromaticNumber(int n, int* r, int rSize) {
 		}
 	} else {  /* is odd */
 		if (checkIfRValuesAreEqual(r, rSize)) {
-			chromaticResult = 2 * r[2] + ceil(r[2] / 2.0);
+			chromaticResult = 2 * r[0] + ceil(r[0] / 2.0);
 		} else {
-			int lowestR = findLowestR(r, rSize);
-			chromaticResult = 2 * lowestR + ceil(lowestR / 2.0);
+			//int lowestR = findLowestR(r, rSize);
+			//chromaticResult = 2 * lowestR + ceil(lowestR / 2.0);
+			chromaticResult = findTwoLargestUniqueRsAndEvaluate(r, rSize);
 			std::cout << "hmm. this may need to be based on the independence number\n";
 		}
 	}
@@ -81,6 +82,23 @@ int findTwoLargestRs(int* r, int rSize) {
 		}
 	}
 	return largest + secondLargest;
+}
+
+
+
+int findTwoLargestUniqueRsAndEvaluate(int* r, int rSize) {
+	int largest = -1;
+	int secondLargest = -2;
+	for (int i = 0; i < rSize; ++i) {
+		if (largest < r[i]) {
+			secondLargest = largest;
+			largest = r[i];
+		} else if (secondLargest < r[i]) {
+			secondLargest = r[i];
+		}
+	}
+	// matt's equation for chromatic value of odd cycle and outliers in [r1,r2..]
+	return largest + largest + secondLargest - floor(secondLargest / 2);
 }
 
 
