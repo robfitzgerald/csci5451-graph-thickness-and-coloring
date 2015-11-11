@@ -1,7 +1,6 @@
 #include <iostream>
 #include "chromaticNumber.h"
-
-
+#include "rjf_graphMatrix.h"
 
 int main(int argc, char** argv) {
 
@@ -21,6 +20,7 @@ int main(int argc, char** argv) {
 	/* chromatic number */
 
 	int c = chromaticNumber(n,r,rSize);
+	graphMatrix g (n, r, rSize);
 
 	/* thickness */
 
@@ -34,7 +34,10 @@ int main(int argc, char** argv) {
 		}
 	}
 	std::cout << "]:" << std::endl;
-	std::cout << "chromatic number is " << c << "\n" << std::endl;
+	g.tryGraphColoring(c - 1);
+	std::cout << "**Our Computed Coloring Number (" << c << ")**\n";
+	g.tryGraphColoring(c);
+	g.tryGraphColoring(c + 1);
 
 	return 0;
 }

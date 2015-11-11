@@ -1,0 +1,5 @@
+.idea
+*.o
+CmKn
+a.out
+.DS_Store
