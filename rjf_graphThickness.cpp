@@ -31,7 +31,24 @@ bool thickness::populateMatrix() {
 	for (int i = 0; i < n; ++i) {
 		int rightNeighbors = ((i + 1) % n);
 		int leftNeighbors = (((i + 5) - 1) % n);
-		std::cout << "i: " << i << ", r: " << rightNeighbors << ", l" << leftNeighbors << "\n";
+		int startSubG = stepByCycleVertex(i);
+		int endSubG = startSubG + subGraphSize(i);
+		//std::cout << "i: " << i << ", r: " << rightNeighbors << ", l" << leftNeighbors << "\n";
+		int startRightSubG = stepByCycleVertex(rightNeighbors);
+		int endRightSubG = startRightSubG + subGraphSize(rightNeighbors);
+		int startLeftSubG = stepByCycleVertex(leftNeighbors);
+		int endLeftSubG = startLeftSubG + subGraphSize(leftNeighbors);
+
+		for (int j = startRightSubG; j < endRightSubG; ++j) {
+			for (int k = startSubG; k < endSubG; ++k) {
+				adjacencyMatrix[j][k] = 2;
+			}
+		}
+		for (int j = startLeftSubG; j < endLeftSubG; ++j) {
+			for (int k = startSubG; k < endSubG; ++k) {
+				adjacencyMatrix[j][k] = 2;
+			}
+		}
 	}
 
 	consoleLogMatrix(adjacencyMatrix,matrixSize);
