@@ -1,16 +1,18 @@
-#ifndef graphThickness_h
-#define graphThickness_h
+#ifndef graphMatrix_h
+#define graphMatrix_h
 #include "chromaticNumber.h"
 #include <iostream>
 
 
-class thickness {
+class graphMatrix {
 public:
-	thickness(int inputN, int* inputRArray, int inputRSize);
+	graphMatrix(int inputN, int* inputRArray, int inputRSize);
 
 	// vertex numbering is array index notation
 	int stepByCycleVertex(int);
 	int subGraphSize(int);
+
+	void tryGraphColoring(int);
 
 private:
 	bool populateMatrix();

@@ -1,7 +1,10 @@
-#include "rjf_graphThickness.h"
+#include "rjf_graphMatrix.h"
 #include <iostream>
 
-thickness::thickness(int inputN, int* inputRArray, int inputRSize): n(inputN), r(inputRArray), rSize(inputRSize) {
+const int kEdge = 100;
+const int cEdge = 200;
+
+graphMatrix::graphMatrix(int inputN, int* inputRArray, int inputRSize): n(inputN), r(inputRArray), rSize(inputRSize) {
 	// find # of vertices in cycle, multiply against # of vertices in subgraphs
 	// or add # of vertices in subgraphs together if defined.
 	
@@ -44,7 +47,7 @@ thickness::thickness(int inputN, int* inputRArray, int inputRSize): n(inputN), r
 	populateMatrix();
 }
 
-int thickness::stepByCycleVertex(int cycleVertex) {
+int graphMatrix::stepByCycleVertex(int cycleVertex) {
 	int step = 0;
 	for (int i = 0; i < cycleVertex; ++i) {
 		step += r[i];
@@ -52,11 +55,11 @@ int thickness::stepByCycleVertex(int cycleVertex) {
 	return step;
 }
 
-int thickness::subGraphSize(int cycleVertex) {
+int graphMatrix::subGraphSize(int cycleVertex) {
 	return r[cycleVertex];
 }
 
-bool thickness::populateMatrix() {
+bool graphMatrix::populateMatrix() {
 
 	// of the K-form (so, all adjacent except KvKv adjacencies)
 	for (int i = 0; i < n; ++i) {
@@ -65,7 +68,7 @@ bool thickness::populateMatrix() {
 		for (int j = startSubG; j < endSubG; ++j) {
 			for (int k = startSubG; k < endSubG; ++k) {
 				if (j != k) {
-					adjacencyMatrix[j][k] = 1;
+					adjacencyMatrix[j][k] = kEdge;
 				}
 			}
 		}
@@ -84,19 +87,22 @@ bool thickness::populateMatrix() {
 
 		for (int j = startRightSubG; j < endRightSubG; ++j) {
 			for (int k = startSubG; k < endSubG; ++k) {
-				adjacencyMatrix[j][k] = 2;
+				adjacencyMatrix[j][k] = cEdge;
 			}
 		}
 		for (int j = startLeftSubG; j < endLeftSubG; ++j) {
 			for (int k = startSubG; k < endSubG; ++k) {
-				adjacencyMatrix[j][k] = 2;
+				adjacencyMatrix[j][k] = cEdge;
 			}
 		}
 	}
+	return true;
+}
+
+void graphMatrix::tryGraphColoring(int x) {
+
 
 	consoleLogMatrix(adjacencyMatrix,matrixSize);
-
-	return true;
 }
 
 void consoleLogMatrix(int** m, int s) {
