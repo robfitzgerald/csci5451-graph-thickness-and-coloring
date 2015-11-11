@@ -27,6 +27,13 @@ bool thickness::populateMatrix() {
 			}
 		}
 	}
+	// connections from K to its right-neighbors
+	for (int i = 0; i < n; ++i) {
+		int rightNeighbors = ((i + 1) % n);
+		int leftNeighbors = (((i + 5) - 1) % n);
+		std::cout << "i: " << i << ", r: " << rightNeighbors << ", l" << leftNeighbors << "\n";
+	}
+
 	consoleLogMatrix(adjacencyMatrix,matrixSize);
 
 	return true;
