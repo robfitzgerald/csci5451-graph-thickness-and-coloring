@@ -69,6 +69,17 @@ bool checkIfRValuesAreEqual (int* r, int rSize) {
 }
 
 
+int findLargestR(int* r, int rSize) {
+	int largest = -1;
+	for (int i = 0; i < rSize; ++i) {
+		if (largest <= r[i]) {
+			largest = r[i];
+		}
+	}
+	return largest;
+}
+
+
 
 int findTwoLargestRs(int* r, int rSize) {
 	int largest = -1;
