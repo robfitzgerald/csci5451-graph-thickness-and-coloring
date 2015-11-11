@@ -11,45 +11,60 @@ public:
 		// find # of vertices in cycle, multiply against # of vertices in subgraphs
 		// or add # of vertices in subgraphs together if defined.
 		
-		int arraySize = 0;
+		matrixSize = 0;
 		if (checkIfRValuesAreEqual (inputRArray, inputRSize)) {
 			// just multiply r[0] * n
-			arraySize = n * r[0];
-			std::cout << "arraySize (n * r[0]) is " << arraySize << "\n";
+			matrixSize = n * r[0];
+			std::cout << "matrixSize (n * r[0]) is " << matrixSize << "\n";
 		} else {
 			// add all values in r[]
 			for (int i = 0; i < rSize; ++i) {
-				arraySize += inputRArray[i];
+				matrixSize += inputRArray[i];
 			}
-			std::cout << "arraySize (sum) is " << arraySize << "\n";
+			std::cout << "matrixSize (sum) is " << matrixSize << "\n";
 		}
 
-		subGraphSize = findLargestR(inputRArray, inputRSize);
-		std::cout << "subGraphSize is " << subGraphSize << "\n";
+		// this may not be used, but, it's the largest subgraph size
+		// could be helpful if we set up the adj. matrix to be of length
+		// n * subGraphSize, so there is a consistent step size between
+		// subgraphs on the matrix. but, then there would be the cases of
+		// 'this vertex intentionally left blank' which seems dubious.
+		//subGraphSize = findLargestR(inputRArray, inputRSize);
+		//std::cout << "subGraphSize is " << subGraphSize << "\n";
+
 
 		// instantiate adjacency matrix and vertex coloring array
 		// and initialize everything EVERRRRYTHING to zero
-		adjacencyMatrix = new int*[arraySize];
-		for(int i = 0; i < arraySize; ++i) {
-			adjacencyMatrix[i] = new int[arraySize];
-			for (int j = 0; j < arraySize; ++j) {
+		adjacencyMatrix = new int*[matrixSize];
+		for(int i = 0; i < matrixSize; ++i) {
+			adjacencyMatrix[i] = new int[matrixSize];
+			for (int j = 0; j < matrixSize; ++j) {
 				adjacencyMatrix[i][j] = 0;
 			}
 		}
-		vertexColor = new int[arraySize];
-		for (int i = 0; i < arraySize; ++i) {
+		vertexColor = new int[matrixSize];
+		for (int i = 0; i < matrixSize; ++i) {
 			vertexColor[i] = 0;
 		}
 
+		populateMatrix();
 	}
 
+	// vertex numbering is array index notation
+	int stepByCycleVertex(int);
+	int subGraphSize(int);
+
 private:
+	bool populateMatrix();
 	int n;
-	int subGraphSize;
+	//int subGraphSize;
 	int* r;
 	int** adjacencyMatrix;
+	int matrixSize;
 	int* vertexColor;
 	int rSize;
 };
+
+void consoleLogMatrix(int**,int);
 
 #endif
