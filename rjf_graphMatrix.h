@@ -13,7 +13,9 @@ public:
 	int subGraphSize(int);
 
 	void tryGraphColoring(int);
-
+	int getValue(int x, int y) {
+		return adjacencyMatrix[x][y];
+	}
 private:
 	bool populateMatrix();
 	int n;

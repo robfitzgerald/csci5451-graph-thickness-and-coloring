@@ -1,8 +1,7 @@
 #include "rjf_graphMatrix.h"
 #include <iostream>
 
-const int kEdge = 100;
-const int cEdge = 200;
+const int UNCOLORED_EDGE = 999;
 
 graphMatrix::graphMatrix(int inputN, int* inputRArray, int inputRSize): n(inputN), r(inputRArray), rSize(inputRSize) {
 	// find # of vertices in cycle, multiply against # of vertices in subgraphs
@@ -12,13 +11,11 @@ graphMatrix::graphMatrix(int inputN, int* inputRArray, int inputRSize): n(inputN
 	if (checkIfRValuesAreEqual (inputRArray, inputRSize)) {
 		// just multiply r[0] * n
 		matrixSize = n * r[0];
-		std::cout << "matrixSize (n * r[0]) is " << matrixSize << "\n";
 	} else {
 		// add all values in r[]
 		for (int i = 0; i < rSize; ++i) {
 			matrixSize += inputRArray[i];
 		}
-		std::cout << "matrixSize (sum) is " << matrixSize << "\n";
 	}
 
 	// this may not be used, but, it's the largest subgraph size
@@ -43,8 +40,6 @@ graphMatrix::graphMatrix(int inputN, int* inputRArray, int inputRSize): n(inputN
 	for (int i = 0; i < matrixSize; ++i) {
 		vertexColor[i] = 0;
 	}
-
-	populateMatrix();
 }
 
 int graphMatrix::stepByCycleVertex(int cycleVertex) {
@@ -68,7 +63,7 @@ bool graphMatrix::populateMatrix() {
 		for (int j = startSubG; j < endSubG; ++j) {
 			for (int k = startSubG; k < endSubG; ++k) {
 				if (j != k) {
-					adjacencyMatrix[j][k] = kEdge;
+					adjacencyMatrix[j][k] = UNCOLORED_EDGE;
 				}
 			}
 		}
@@ -87,12 +82,12 @@ bool graphMatrix::populateMatrix() {
 
 		for (int j = startRightSubG; j < endRightSubG; ++j) {
 			for (int k = startSubG; k < endSubG; ++k) {
-				adjacencyMatrix[j][k] = cEdge;
+				adjacencyMatrix[j][k] = UNCOLORED_EDGE;
 			}
 		}
 		for (int j = startLeftSubG; j < endLeftSubG; ++j) {
 			for (int k = startSubG; k < endSubG; ++k) {
-				adjacencyMatrix[j][k] = cEdge;
+				adjacencyMatrix[j][k] = UNCOLORED_EDGE;
 			}
 		}
 	}
@@ -100,17 +95,55 @@ bool graphMatrix::populateMatrix() {
 }
 
 void graphMatrix::tryGraphColoring(int x) {
+	// set up matrix labelled with uncolored edges
+	populateMatrix();
 
+	// for each vertex
+	for (int i = 0; i < matrixSize; ++i) {
+		bool colors [(x+1)];
+		for (int i = 1; i <= x; ++i) {
+			colors[i] = true;
+		}	
 
+		// find adjacent edges
+		for (int j = 0; j < matrixSize; ++j) {
+			if (adjacencyMatrix[i][j] != 0 && adjacencyMatrix[i][j] != UNCOLORED_EDGE) {
+				int foundColor = adjacencyMatrix[i][j];
+				colors[foundColor] = false;
+			}
+		}
+		// i have now removed all used colors from color[] for this vertex.
+		// set the diagonal with this i's color.
+		for (int newC = 1; newC <= x; ++newC) {
+			if (colors[newC] == true) {
+				adjacencyMatrix[i][i] = newC;
+				for (int j = 0; j < matrixSize; ++j) {
+					if (adjacencyMatrix[j][i] == UNCOLORED_EDGE) {
+						adjacencyMatrix[j][i] = newC;
+					}
+				}
+				newC = x + 1;  // break for loop
+			}
+		}
+	}
+	std::cout << "-----Attempting a Graph Coloring with " << x << " colors-----\n";
 	consoleLogMatrix(adjacencyMatrix,matrixSize);
 }
 
 void consoleLogMatrix(int** m, int s) {
-	std::cout << "-----Matrix Output-----\n";
+	std::cout << "-----Adjacency Matrix-----\n";
 	for (int i = 0; i < s; ++i) {
 		std::cout << "[ ";
 		for (int j = 0; j < s; ++j) {
-			std::cout << " " << m[i][j] << " ";
+			int number = m[i][j];
+			if (number < 10) {
+				std::cout << " ";  // pad numbers less than 10
+			} 
+			if (number == UNCOLORED_EDGE) {
+				std::cout << "  / ";  // error!
+			} else {
+				std::cout << " " << number << " ";
+			}
 		}
 		std::cout << " ]\n";
 	}
