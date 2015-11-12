@@ -11,6 +11,7 @@ public:
 	// vertex numbering is array index notation
 	int stepByCycleVertex(int);
 	int subGraphSize(int);
+	int largestSubGraph();
 
 	void tryGraphColoring(int);
 	int getValue(int x, int y) {
@@ -19,11 +20,9 @@ public:
 private:
 	bool populateMatrix();
 	int n;
-	//int subGraphSize;
 	int* r;
 	int** adjacencyMatrix;
 	int matrixSize;
-	int* vertexColor;
 	int rSize;
 };
 
