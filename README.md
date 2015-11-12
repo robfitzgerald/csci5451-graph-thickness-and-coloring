@@ -1,14 +1,17 @@
 # thickness and graph coloring
 
-## run graph coloring code:
+## installation and execution (linux instructions)
 
 ```
-make
-./CnKm
+$ cd implementation_01
+$ make
+$ ./matrix.out
 ```
 
-## run matt's thickness code:
+or
+
 ```
-cd thickness
-make
+$ cd implementation_02
+$ make
+$ ./CnKm
 ```
