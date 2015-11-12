@@ -1,5 +1,6 @@
 #include "rjf_graphMatrix.h"
 #include <iostream>
+#include <iomanip>
 
 const int UNCOLORED_EDGE = 999;
 
@@ -180,8 +181,12 @@ void graphMatrix::tryGraphColoring(int x) {
 }
 
 void consoleLogMatrix(int** m, int s) {
-	std::cout << "-----Adjacency Matrix-----\n";
+	std::cout << "-----Color List and Adjacency Matrix-----\n";
+	std::cout << "Vertex-Color-----------------------------\n";
+	std::cout << std::left;
 	for (int i = 0; i < s; ++i) {
+		std::cout << std::setw(7) << i;
+		std::cout << std::setw(5) << m[i][i];
 		std::cout << "[ ";
 		for (int j = 0; j < s; ++j) {
 			int number = m[i][j];
