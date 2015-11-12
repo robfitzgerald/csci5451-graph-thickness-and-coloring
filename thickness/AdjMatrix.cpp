@@ -87,7 +87,7 @@ void AdjMatrix::fixColors()
         cycleN[r-i].setColor(r-i,colorsCurrent+i);
         cycleN[nr-r-i].setColor(nr-r-i, colorsCurrent+i);
     }
-    //cycleN[nr-i].setColor(nr-i,cycleN[r-i].getColor(r-i)*2);
+    
     for(int j = 0; j < r; j++)
     {
         if(r%2 && j+1 == r)
