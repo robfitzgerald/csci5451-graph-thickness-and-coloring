@@ -10,6 +10,7 @@ AdjMatrix::AdjMatrix(int nIn, int rIn)
     n = nIn;
     r = rIn;
     nr = n*r;
+    vertex = 1;
 
     cycleN = new KGraph[nr];
 
@@ -57,6 +58,7 @@ void AdjMatrix::loadMatrix()
                 if(color > 2*r)
                     color = 1;
                 cycleN[i].setColor(j,color++);
+                cycleN[i].setVertexNum(j,vertex++);
             }
             else if(cycleN[i].getCyclePosRow(j)-cycleN[i].getCyclePosCol(j) == 1 ||
                     n-cycleN[i].getCyclePosRow(j) == 0 && n-cycleN[i].getCyclePosCol(j) == 4)
@@ -86,7 +88,7 @@ void AdjMatrix::fixColors()
         cycleN[r-i].setColor(r-i,colorsCurrent+i);
         cycleN[nr-r-i].setColor(nr-r-i, colorsCurrent+i);
     }
-    
+
     for(int j = 0; j < r; j++)
     {
         if(r%2 && j+1 == r)
@@ -98,7 +100,7 @@ void AdjMatrix::fixColors()
 
 void AdjMatrix::outputMatrix()
 {
-    std::cout << "\nC" << n << 'K' << r << " Matrix:\n";
+    /*std::cout << "\nC" << n << 'K' << r << " Matrix:\n";
     for(int i = 0; i < nr; i++)
     {
 
@@ -107,16 +109,25 @@ void AdjMatrix::outputMatrix()
             std::cout << '(' << cycleN[i].getEdge(j) << ')';
         }
         std::cout << std::endl;
-    }
+    }*/
 
-    std::cout << "\nC" << n << 'K' << r << " Colors:\n";
+    std::cout << "\nC" << n << 'K' << r << "\nColors Required: "
+              << 3*r - floor(r/2) << "\n";
     for(int i = 0; i < nr; i++)
     {
-
         for(int j = 0; j < nr; j++)
         {
-            std::cout << '(' << std::setw(2) << cycleN[i].getColor(j) << ')';
+            if(cycleN[i].getColor(j))
+                std::cout << '(' << std::setw(2) << cycleN[i].getColor(j) << ')';
         }
-        std::cout << std::endl;
+        if((i+1)%r == 0)
+            std::cout << std::endl;
+    }
+
+    for(int i = 0; i < nr; i++)
+    {
+        for(int j = 0; j < nr; j++)
+            if(cycleN[i].getVertexNum(j))
+                std::cout << '(' << std::setw(2) << cycleN[i].getVertexNum(j) << ')';
     }
 }

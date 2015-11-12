@@ -8,6 +8,7 @@ class AdjMatrix
         int n;
         int r;
         int nr;
+        int vertex;
 
         KGraph* cycleN;
 
@@ -20,10 +21,11 @@ class AdjMatrix
         void fixColors();
 
         // Getters
-		int get(int i, int j)
+        int get(int i, int j)
         {
             cycleN[i].getColor(j);
         }
+
 
         // Destructor
         ~AdjMatrix();
