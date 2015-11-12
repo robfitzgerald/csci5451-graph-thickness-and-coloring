@@ -14,6 +14,8 @@
 #include <limits>
 #include <stdlib.h> // used for EXIT_SUCCESS and EXIT_FAILURE
 #include "AdjMatrix.h"
+//#include "numberOfPlanes.hpp"
+#include "numberOfPlanes.hpp"
 
 int main( )
 {
@@ -28,6 +30,8 @@ int main( )
     test000.loadMatrix();
     test000.outputMatrix();
 
+    //numberOfPlanes(0,test000);
+    //test000.makePlanes();
 
     return EXIT_SUCCESS;
 }
