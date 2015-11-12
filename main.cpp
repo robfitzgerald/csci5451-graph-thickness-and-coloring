@@ -1,38 +1,43 @@
-/******************************************************************************
-* DESCRIPTION
-* 
-* Name:       Matt Scheidler
-* Class:      3543-001
-* Assignment: Lab 03
-* Due Date:   12/02/15
-* File Name:  main.cpp
-* 
-******************************************************************************/
-
 #include <iostream>
-#include <iomanip>
-#include <limits>
-#include <stdlib.h> // used for EXIT_SUCCESS and EXIT_FAILURE
-#include "AdjMatrix.h"
-//#include "numberOfPlanes.hpp"
-#include "numberOfPlanes.hpp"
+#include "chromaticNumber.h"
+#include "rjf_graphMatrix.h"
 
-int main( )
-{
-    int n = 0, r = 0;
+int main(int argc, char** argv) {
 
-    std::cout << "Enter a value for n: ";
-    std::cin >> n;
-    std::cout << "Enter a value for r: ";
-    std::cin >> r;
+	/* command line input processing */
 
-    AdjMatrix test000(n,r);
-    test000.loadMatrix();
-    test000.outputMatrix();
+	if (argc < 3) {
+		std::cout << "usage: CnKr <cycle length> r1 r2 .. rn \n\n";
+		return 1;
+	}
+	unsigned rSize = argc - 2;
+	int r [rSize];
+	for (int i = 0; i < rSize; ++i) {
+		r[i] = atoi(argv[i+2]);
+	}
+	int n = atoi(argv[1]);
 
-    //numberOfPlanes(0,test000);
-    //test000.makePlanes();
+	/* chromatic number */
 
-    return EXIT_SUCCESS;
+	int c = chromaticNumber(n,r,rSize);
+	graphMatrix g (n, r, rSize);
+
+	/* thickness */
+
+	/* output */
+
+	std::cout << "Graph of C" << n << "[";
+	for (int i = 0; i < rSize; ++i) {
+		std::cout << r[i];
+		if (!(rSize - 1 == i)) {
+			std::cout << ",";
+		}
+	}
+	std::cout << "]:" << std::endl;
+	g.tryGraphColoring(c - 1);
+	std::cout << "**Our Computed Coloring Number (" << c << ")**\n";
+	g.tryGraphColoring(c);
+	g.tryGraphColoring(c + 1);
+
+	return 0;
 }
-
