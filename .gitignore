@@ -3,3 +3,6 @@
 CmKn
 a.out
 .DS_Store
+*.iml
+*.xml
+*.stackdump

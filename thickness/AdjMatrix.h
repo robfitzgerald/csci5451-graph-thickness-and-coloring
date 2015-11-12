@@ -20,7 +20,10 @@ class AdjMatrix
         void fixColors();
 
         // Getters
-
+		int get(int i, int j)
+        {
+            cycleN[i].getColor(j);
+        }
 
         // Destructor
         ~AdjMatrix();
