@@ -17,6 +17,7 @@ class AdjMatrix
         // Setters
         void loadMatrix();
         void outputMatrix();
+        void fixColors();
 
         // Getters
 
