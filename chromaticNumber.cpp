@@ -27,6 +27,9 @@ int chromaticNumber(int n, int* r, int rSize) {
 	//   if not all rn are the same
 	//     ..
 
+       // edge case, n == 1
+       if (n == 1) return r[0];
+
 	int chromaticResult = 0;
 	if (isEven(n)) {
 		std::cout << "add largest and second largest r values.\n";
@@ -57,21 +60,20 @@ bool isEven (int n) {
 
 
 bool checkIfRValuesAreEqual (int* r, int rSize) {
-	bool rValuesAreAllTheSame = true;
 	int previousRValue = r[0];
 	for (int i = 1; i < rSize; i++) {
 		if (r[i] != previousRValue) {
-			rValuesAreAllTheSame = false;
+			return false;
 		}
 		previousRValue = r[i];
 	}
-	return rValuesAreAllTheSame;
+	return true;
 }
 
 
 int findLargestR(int* r, int rSize) {
-	int largest = -1;
-	for (int i = 0; i < rSize; ++i) {
+	int largest = r[0[;
+	for (int i = 1; i < rSize; ++i) {
 		if (largest <= r[i]) {
 			largest = r[i];
 		}
@@ -82,9 +84,9 @@ int findLargestR(int* r, int rSize) {
 
 
 int findTwoLargestRs(int* r, int rSize) {
-	int largest = -1;
-	int secondLargest = -2;
-	for (int i = 0; i < rSize; ++i) {
+	int largest = r[0[;
+	int secondLargest = -1;
+	for (int i = 1; i < rSize; ++i) {
 		if (largest <= r[i]) {
 			secondLargest = largest;
 			largest = r[i];
@@ -98,8 +100,8 @@ int findTwoLargestRs(int* r, int rSize) {
 
 
 int findTwoLargestUniqueRsAndEvaluate(int* r, int rSize) {
-	int largest = -1;
-	int secondLargest = -2;
+	int largest = r[0];
+	int secondLargest = -1;
 	for (int i = 0; i < rSize; ++i) {
 		if (largest < r[i]) {
 			secondLargest = largest;
