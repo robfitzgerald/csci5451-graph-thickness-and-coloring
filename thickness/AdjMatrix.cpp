@@ -81,7 +81,6 @@ void AdjMatrix::fixColors()
 
     for(int i = 1, j = 0; i <= floor(r/2); i++, j+=2)
     {
-        std::cout << "go1";
         temp[j] = cycleN[nr-r-i].getColor(nr-r-i);
         temp[j+1] = cycleN[r-i].getColor(r-i);
         cycleN[r-i].setColor(r-i,colorsCurrent+i);
